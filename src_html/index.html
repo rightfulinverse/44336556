@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>CFR</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src='main.js'></script>
+</head>
+<body class="container">
+    <div class="container my-5 text-center">
+        <h1>CFR statistics</h1>
+        <p id="active-statistic"></p>
+    </div>
+
+    <header class="py-3 mb-3 border-bottom">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Show statistic
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#" onclick="statPercentage();">Percentage of total CFR content</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="statWorkforce();">Workforce</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="statWorkforceToPercentage();">Workforce to percentage of total CFR content</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="statCorrections();">Corrections per year</a></li>
+                    </ul>
+                </div>
+            </div>
+            <input type="text" class="form-control" id="search-bar">
+            <script async>
+                const inputElement = document.getElementById("search-bar");
+                inputElement.addEventListener("input", function(event) {
+                    const parentElement = document.getElementById("cfr-titles");
+                    const childElements = parentElement.children;
+
+                    for (let i = 0; i < childElements.length; i++) {
+                        const child = childElements[i];
+                        
+                        if (!child.textContent.toLowerCase().includes(event.target.value.toLowerCase())) {
+                            child.style.display = "none";
+                        } else {
+                            child.style.display = "";
+                        }
+                    }
+                });
+            </script>
+        </div>
+    </header>
+
+    <ol type="1|a|A|i|I" class="list-group" id="cfr-titles">
+        <li class="list-group-item" id="cfr-title-1">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE1$</div>
+                <div class="col-6" id="cfr-title-1-stat">?</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-2">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE2$</div>
+                <div class="col-6" id="cfr-title-2-stat">?</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-3">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE3$</div>
+                <div class="col-6" id="cfr-title-3-stat">?</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-4">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE4$</div>
+                <div class="col-6" id="cfr-title-4-stat">?</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-5">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE5$</div>
+                <div class="col-6" id="cfr-title-5-stat">?</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-6">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE6$</div>
+                <div class="col-6" id="cfr-title-6-stat">?</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-7">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE7$</div>
+                <div class="col-6" id="cfr-title-7-stat">?</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-8">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE8$</div>
+                <div class="col-6" id="cfr-title-8-stat">?</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-9">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE9$</div>
+                <div class="col-6" id="cfr-title-9-stat">?</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-10">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE10$</div>
+                <div class="col-6" id="cfr-title-10-stat">?</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-11">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE11$</div>
+                <div class="col-6" id="cfr-title-11-stat">?</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-12">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE12$</div>
+                <div class="col-6" id="cfr-title-12-stat">?</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-13">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE13$</div>
+                <div class="col-6" id="cfr-title-13-stat">?</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-14">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE14$</div>
+                <div class="col-6" id="cfr-title-14-stat">?</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-15">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE15$</div>
+                <div class="col-6" id="cfr-title-15-stat">?</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-16">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE16$</div>
+                <div class="col-6" id="cfr-title-16-stat">?</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-17">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE17$</div>
+                <div class="col-6" id="cfr-title-17-stat">?</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-18">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE18$</div>
+                <div class="col-6" id="cfr-title-18-stat">?</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-19">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE19$</div>
+                <div class="col-6" id="cfr-title-19-stat">?</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-20">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE20$</div>
+                <div class="col-6" id="cfr-title-20-stat">?</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-21">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE21$</div>
+                <div class="col-6" id="cfr-title-21-stat">?</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-22">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE22$</div>
+                <div class="col-6" id="cfr-title-22-stat">?</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-23">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE23$</div>
+                <div class="col-6" id="cfr-title-23-stat">?</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-24">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE24$</div>
+                <div class="col-6" id="cfr-title-24-stat">?</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-25">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE25$</div>
+                <div class="col-6" id="cfr-title-25-stat">?</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-26">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE26$</div>
+                <div class="col-6" id="cfr-title-26-stat">?</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-27">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE27$</div>
+                <div class="col-6" id="cfr-title-27-stat">?</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-28">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE28$</div>
+                <div class="col-6" id="cfr-title-28-stat">?</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-29">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE29$</div>
+                <div class="col-6" id="cfr-title-29-stat">?</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-30">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE30$</div>
+                <div class="col-6" id="cfr-title-30-stat">?</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-31">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE31$</div>
+                <div class="col-6" id="cfr-title-31-stat">?</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-32">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE32$</div>
+                <div class="col-6" id="cfr-title-32-stat">?</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-33">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE33$</div>
+                <div class="col-6" id="cfr-title-33-stat">?</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-34">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE34$</div>
+                <div class="col-6" id="cfr-title-34-stat">?</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-35">
+            <div class="row">
+                <div class="col-6">Omitted</div>
+                <div class="col-6">Omitted</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-36">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE36$</div>
+                <div class="col-6" id="cfr-title-36-stat">?</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-37">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE37$</div>
+                <div class="col-6" id="cfr-title-37-stat">?</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-38">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE38$</div>
+                <div class="col-6" id="cfr-title-38-stat">?</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-39">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE39$</div>
+                <div class="col-6" id="cfr-title-39-stat">?</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-40">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE40$</div>
+                <div class="col-6" id="cfr-title-40-stat">?</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-41">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE41$</div>
+                <div class="col-6" id="cfr-title-41-stat">?</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-42">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE42$</div>
+                <div class="col-6" id="cfr-title-42-stat">?</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-43">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE43$</div>
+                <div class="col-6" id="cfr-title-43-stat">?</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-44">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE44$</div>
+                <div class="col-6" id="cfr-title-44-stat">?</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-45">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE45$</div>
+                <div class="col-6" id="cfr-title-45-stat">?</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-46">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE46$</div>
+                <div class="col-6" id="cfr-title-46-stat">?</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-47">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE47$</div>
+                <div class="col-6" id="cfr-title-47-stat">?</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-48">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE48$</div>
+                <div class="col-6" id="cfr-title-48-stat">?</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-49">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE49$</div>
+                <div class="col-6" id="cfr-title-49-stat">?</div>
+            </div>
+        </li>
+        <li class="list-group-item" id="cfr-title-50">
+            <div class="row">
+                <div class="col-6">$CFR-BREAKDOWN-TITLE50$</div>
+                <div class="col-6" id="cfr-title-50-stat">?</div>
+            </div>
+        </li>
+        
+    </ol>
+    $CFR-BREAKDOWN-JSON$
+    $CORRECTIONS-BREAKDOWN-JSON$
+    $WORKFORCE-BREAKDOWN-JSON$
+    <script async>
+        for (let titleNumber in title_breakdown_json) {
+            const cfrTitleLi = document.getElementById("cfr-title-" + titleNumber);
+            if (cfrTitleLi) {
+                cfrTitleLi.setAttribute("title-pct", title_breakdown_json[titleNumber]);
+                cfrTitleLi.style.backgroundColor = generateColor(title_breakdown_json[titleNumber]);
+            }
+        }
+        statPercentage(); // Default show percentage of total CFR
+    </script>
+
+    <div class="container">
+        <footer class="py-3 my-4">
+            <p class="text-center text-body-secondary">🇺🇸</p>
+        </footer>
+    </div>
+</body>
+</html>
